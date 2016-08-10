@@ -719,7 +719,15 @@
 	if(stat & (BROKEN|MAINT))
 		return
 
-	src.interact(user)
+	if(emagged)
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		shock(user, 50)
+		to_chat(user, "<span class='warning'>The APC shocks you!")
+		src.interact(user, 50)
+	else
+		src.interact(user)
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
